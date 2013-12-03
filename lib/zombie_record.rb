@@ -1,5 +1,7 @@
-require "zombie_record/version"
+require 'active_support'
+require 'zombie_record/version'
 
 module ZombieRecord
-  # Your code goes here...
 end
+
+require 'zombie_record/restorable'

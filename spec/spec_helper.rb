@@ -1,2 +1,62 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'active_record'
 require 'zombie_record'
+
+class Book < ActiveRecord::Base
+  include ZombieRecord::Restorable
+
+  belongs_to :author
+  has_many :chapters
+end
+
+class Chapter < ActiveRecord::Base
+  include ZombieRecord::Restorable
+
+  belongs_to :book
+end
+
+class Author < ActiveRecord::Base
+  include ZombieRecord::Restorable
+
+  has_many :books
+end
+
+RSpec.configure do |config|
+  config.before :suite do
+    ActiveRecord::Base.establish_connection(
+      adapter: "mysql2",
+      username: "root",
+      host: "127.0.0.1",
+      port: 3306,
+      password: ""
+    )
+
+    ActiveRecord::Base.connection.create_database("zombie_record")
+    ActiveRecord::Base.connection.execute("use zombie_record;")
+
+    ActiveRecord::Schema.define do
+      self.verbose = false
+
+      create_table :books do |t|
+        t.integer :author_id
+        t.timestamps
+        t.timestamp :deleted_at
+      end
+
+      create_table :chapters do |t|
+        t.integer :book_id
+        t.timestamps
+        t.timestamp :deleted_at
+      end
+
+      create_table :authors do |t|
+        t.timestamps
+        t.timestamp :deleted_at
+      end
+    end
+  end
+
+  config.after :suite do
+    ActiveRecord::Base.connection.drop_database("zombie_record") rescue nil
+  end
+end
