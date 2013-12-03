@@ -1,6 +1,6 @@
-# ZombieRecord
+# Zombie Record
 
-TODO: Write a gem description
+Allows restoring your Active Records from the dead!
 
 ## Installation
 
@@ -18,7 +18,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Simply include the `ZombieRecord::Restorable` in your model class:
+
+```ruby
+class Book < ActiveRecord::Base
+  include ZombieRecord::Restorable
+end
+```
+
+Zombie Record assumes the model's table has a `deleted_at` column with the `timestamp` type.
 
 ## Contributing
 
