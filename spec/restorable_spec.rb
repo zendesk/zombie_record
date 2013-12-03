@@ -34,6 +34,16 @@ describe ZombieRecord::Restorable do
       deleted_book.deleted_at.should be_nil
     end
 
+    it "also restores soft deleted associated records" do
+      chapter = book.chapters.create!
+
+      book.destroy
+      deleted_book.restore!
+
+      deleted_chapter = Chapter.with_deleted.find(chapter.id)
+      deleted_chapter.deleted_at.should be_nil
+    end
+
     it "fails if the object itself has been destroyed" do
       book.destroy
 

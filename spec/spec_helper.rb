@@ -1,12 +1,14 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'bundler/setup'
 require 'active_record'
+
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'zombie_record'
 
 class Book < ActiveRecord::Base
   include ZombieRecord::Restorable
 
   belongs_to :author
-  has_many :chapters
+  has_many :chapters, dependent: :destroy
 end
 
 class Chapter < ActiveRecord::Base

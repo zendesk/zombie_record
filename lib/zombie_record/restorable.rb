@@ -33,6 +33,22 @@ module ZombieRecord
       end
 
       update_column(:deleted_at, nil)
+
+      restore_associated_records!
+    end
+
+    private
+
+    def restore_associated_records!
+      self.class.reflect_on_all_associations.each do |association|
+        if association.options[:dependent] == :destroy
+          records = Array.wrap(public_send(association.name).deleted)
+
+          records.each do |record|
+            record.restore!
+          end
+        end
+      end
     end
 
     module ClassMethods
