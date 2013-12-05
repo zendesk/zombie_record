@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'active_record'
+require 'timecop'
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'zombie_record'
@@ -9,9 +10,16 @@ class Book < ActiveRecord::Base
 
   belongs_to :author
   has_many :chapters, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
 end
 
 class Chapter < ActiveRecord::Base
+  include ZombieRecord::Restorable
+
+  belongs_to :book
+end
+
+class Bookmark < ActiveRecord::Base
   include ZombieRecord::Restorable
 
   belongs_to :book
@@ -48,6 +56,12 @@ RSpec.configure do |config|
       create_table :chapters do |t|
         t.integer :book_id
         t.timestamps
+        t.timestamp :deleted_at
+      end
+
+      create_table :bookmarks do |t|
+        t.integer :book_id
+        t.timestamp :created_at
         t.timestamp :deleted_at
       end
 

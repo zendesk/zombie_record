@@ -14,8 +14,11 @@ module ZombieRecord
 
         if persisted?
           time = current_time_from_proper_timezone
-          update_column(:updated_at, time)
           update_column(:deleted_at, time)
+
+          if self.class.column_names.include?("updated_at")
+            update_column(:updated_at, time)
+          end
         end
 
         @destroyed = true

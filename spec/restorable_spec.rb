@@ -23,6 +23,22 @@ describe ZombieRecord::Restorable do
     end
   end
 
+  describe "#destroy" do
+    it "sets #updated_at if it is defined" do
+      book = Timecop.travel(2.days.ago) { Book.create! }
+      updated_at = book.updated_at
+
+      book.destroy
+
+      book.updated_at.should_not == updated_at
+    end
+
+    it "does not set #updated_at if it is not defined" do
+      bookmark = Timecop.travel(2.days.ago) { Bookmark.create! }
+      expect { bookmark.destroy }.to_not raise_exception
+    end
+  end
+
   describe "#restore!" do
     let(:book) { Book.create! }
     let(:deleted_book) { Book.deleted.find(book.id) }
