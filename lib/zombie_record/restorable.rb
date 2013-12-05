@@ -44,12 +44,17 @@ module ZombieRecord
 
     def restore_associated_records!
       self.class.reflect_on_all_associations.each do |association|
-        if association.options[:dependent] == :destroy
-          records = Array.wrap(public_send(association.name).deleted)
+        # Only restore associations that are automatically destroyed alongside
+        # the record.
+        next unless association.options[:dependent] == :destroy
 
-          records.each do |record|
-            record.restore!
-          end
+        # Don't try to restore models that are not restorable.
+        next unless association.klass.ancestors.include?(Restorable)
+
+        records = Array.wrap(public_send(association.name).deleted)
+
+        records.each do |record|
+          record.restore!
         end
       end
     end

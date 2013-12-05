@@ -60,6 +60,15 @@ describe ZombieRecord::Restorable do
       deleted_chapter.deleted_at.should be_nil
     end
 
+    it "does not restore hard deleted associated records" do
+      note = book.notes.create!
+
+      book.destroy
+      deleted_book.restore!
+
+      Note.where(id: note.id).should_not exist
+    end
+
     it "fails if the object itself has been destroyed" do
       book.destroy
 
