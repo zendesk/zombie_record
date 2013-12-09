@@ -51,11 +51,22 @@ module ZombieRecord
         # Don't try to restore models that are not restorable.
         next unless association.klass.ancestors.include?(Restorable)
 
-        records = Array.wrap(public_send(association.name).deleted)
+        records = deleted_records_for_association(association)
 
         records.each do |record|
           record.restore!
         end
+      end
+    end
+
+    def deleted_records_for_association(association)
+      if association.macro == :has_one
+        foreign_key = association.foreign_key
+        association.klass.deleted.where(foreign_key => id)
+      elsif association.macro == :has_many
+        public_send(association.name).deleted
+      else
+        raise "association type #{association.macro} not supported"
       end
     end
 
