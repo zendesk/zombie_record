@@ -9,6 +9,8 @@ class Book < ActiveRecord::Base
   include ZombieRecord::Restorable
 
   belongs_to :author
+  has_one :cover, dependent: :destroy
+
   has_many :chapters, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :notes, dependent: :destroy
@@ -35,6 +37,13 @@ class Author < ActiveRecord::Base
 
   has_many :books
 end
+
+class Cover < ActiveRecord::Base
+  include ZombieRecord::Restorable
+
+  belongs_to :book
+end
+
 
 RSpec.configure do |config|
   config.before :suite do
@@ -73,6 +82,12 @@ RSpec.configure do |config|
       create_table :notes do |t|
         t.integer :book_id
         t.timestamps
+      end
+
+      create_table :covers do |t|
+        t.integer :book_id
+        t.timestamps
+        t.timestamp :deleted_at
       end
 
       create_table :authors do |t|

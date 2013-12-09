@@ -50,7 +50,7 @@ describe ZombieRecord::Restorable do
       deleted_book.deleted_at.should be_nil
     end
 
-    it "also restores soft deleted associated records" do
+    it "also restores restorable has_many associated records" do
       chapter = book.chapters.create!
 
       book.destroy
@@ -58,6 +58,16 @@ describe ZombieRecord::Restorable do
 
       deleted_chapter = Chapter.with_deleted.find(chapter.id)
       deleted_chapter.deleted_at.should be_nil
+    end
+
+    it "also restores restorable has_one associated records" do
+      cover = book.create_cover!
+
+      book.destroy
+      deleted_book.restore!
+
+      deleted_cover = Cover.with_deleted.find(cover.id)
+      deleted_cover.deleted_at.should be_nil
     end
 
     it "does not restore hard deleted associated records" do
