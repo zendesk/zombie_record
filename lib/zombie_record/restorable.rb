@@ -76,7 +76,7 @@ module ZombieRecord
       #
       # Returns an ActiveRecord::Relation.
       def deleted
-        with_deleted.where("deleted_at IS NOT NULL")
+        with_deleted.where("#{quoted_table_name}.deleted_at IS NOT NULL")
       end
 
       # Scopes the relation to include both active and deleted records.
