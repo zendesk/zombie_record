@@ -1,3 +1,8 @@
+###### Unreleased
+
+* Remove compatibility with Rails 3, instead adding compatibility with
+  Rails 4.0.
+
 ###### v0.4.0
 
 * Allow accessing associated records on deleted objects, even if they themselves
