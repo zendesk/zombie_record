@@ -28,6 +28,20 @@ end
 
 Zombie Record assumes the model's table has a `deleted_at` column with the `timestamp` type.
 
+You can now delete and restore Book records:
+
+```ruby
+book = Book.find(42)
+book.destroy
+
+Book.find(42) # raises ActiveRecord::RecordNotFound.
+
+book = Book.deleted.find(42)
+book.restore!
+
+Book.find(42) # returns the Book record.
+```
+
 ## Contributing
 
 1. Fork it
