@@ -85,4 +85,18 @@ describe ZombieRecord::Restorable do
       expect { book.restore! }.to raise_exception(RuntimeError)
     end
   end
+
+  describe "#deleted?" do
+    let(:book) { Book.create! }
+
+    it "returns true if the record is deleted" do
+      book.destroy
+
+      book.should be_deleted
+    end
+
+    it "returns false if the record is not deleted" do
+      book.should_not be_deleted
+    end
+  end
 end

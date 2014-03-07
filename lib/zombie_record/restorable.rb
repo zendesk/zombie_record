@@ -40,6 +40,13 @@ module ZombieRecord
       restore_associated_records!
     end
 
+    # Whether the record has been destroyed.
+    #
+    # Returns true if the record is deleted, false otherwise.
+    def deleted?
+      !deleted_at.nil?
+    end
+
     private
 
     def restore_associated_records!
