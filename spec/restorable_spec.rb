@@ -1,6 +1,50 @@
 require 'spec_helper'
 
 describe ZombieRecord::Restorable do
+  context "when the record is deleted" do
+    it "allows accessing a deleted has_one association" do
+      book = Book.create!
+      cover = Cover.create!(book: book)
+
+      book.destroy
+      book = Book.with_deleted.first
+
+      book.cover.should == cover.reload
+    end
+
+    it "allows accessing deleted belongs_to associations" do
+      book = Book.create!
+      chapter = book.chapters.create!
+
+      book.destroy
+      chapter = Chapter.with_deleted.first
+
+      chapter.book.should == book
+    end
+
+    it "ensures deleted associations themselves allow access to deleted records" do
+      book = Book.create!
+      chapter = book.chapters.create!
+      book.bookmarks.create!
+
+      book.destroy
+      bookmark = Bookmark.with_deleted.first
+
+      bookmark.book.chapters.should == [chapter]
+      chapter = bookmark.book.chapters.first
+
+      chapter.book.should == book
+    end
+
+    it "forwards normal method calls" do
+      book = Book.create!(title: "The Odyssey")
+      book.destroy
+      book = Book.with_deleted.first
+
+      book.title.should == "The Odyssey"
+    end
+  end
+
   describe ".deleted" do
     it "scopes the query to only deleted records" do
       book1 = Book.create!
