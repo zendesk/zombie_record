@@ -122,4 +122,18 @@ describe ZombieRecord::Restorable do
       book.should_not be_deleted
     end
   end
+
+  describe "#associate_with_deleted" do
+    it "removes default scope from associations when deleted" do
+      cover = Cover.create!
+      book = Book.create!(cover: cover)
+
+      book.destroy
+      Book.find_by_id(book.id).should be_nil
+      Cover.find_by_id(cover.id).should be_nil
+
+      book = Book.deleted.first
+      book.cover.should == cover
+    end
+  end
 end
