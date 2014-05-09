@@ -77,7 +77,7 @@ module ZombieRecord
           when :has_one, :belongs_to
             (klass || association.klass).unscoped { super() }
           when :has_many
-            super().deleted
+            super().with_deleted
           end
         else
           super()

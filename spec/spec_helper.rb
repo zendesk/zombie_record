@@ -80,6 +80,7 @@ RSpec.configure do |config|
         t.integer :author_id
         t.integer :library_id
         t.timestamps
+        t.string :title
         t.timestamp :deleted_at
       end
 

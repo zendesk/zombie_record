@@ -124,16 +124,46 @@ describe ZombieRecord::Restorable do
   end
 
   describe "#associate_with_deleted" do
-    it "removes default scope from associations when deleted" do
-      cover = Cover.create!
-      book = Book.create!(cover: cover)
+    it "allows accessing a deleted has_one association" do
+      book = Book.create!
+      cover = Cover.create!(book: book)
 
       book.destroy
-      Book.find_by_id(book.id).should be_nil
-      Cover.find_by_id(cover.id).should be_nil
+      book = Book.deleted.find(book.id)
 
-      book = Book.deleted.first
-      book.cover.should == cover
+      book.cover.should == cover.reload
+    end
+
+    it "allows accessing deleted belongs_to associations" do
+      book = Book.create!
+      chapter = book.chapters.create!
+
+      book.destroy
+      chapter = Chapter.deleted.find(chapter.id)
+
+      chapter.book.should == book
+    end
+
+    it "ensures deleted associations themselves allow access to deleted records" do
+      book = Book.create!
+      chapter = book.chapters.create!
+      bookmark = book.bookmarks.create!
+
+      book.destroy
+      bookmark = Bookmark.deleted.find(bookmark.id)
+
+      bookmark.book.chapters.should == [chapter]
+      chapter = bookmark.book.chapters.first
+
+      chapter.book.should == book
+    end
+
+    it "forwards normal method calls" do
+      book = Book.create!(title: "The Odyssey")
+      book.destroy
+      book = Book.deleted.find(book.id)
+
+      book.title.should == "The Odyssey"
     end
   end
 end
