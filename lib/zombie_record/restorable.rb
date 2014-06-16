@@ -4,6 +4,8 @@ module ZombieRecord
 
     included do
       default_scope { where(deleted_at: nil) }
+
+      define_callbacks :restore
     end
 
     # Override Rails' #destroy for soft-delete functionality
@@ -35,9 +37,11 @@ module ZombieRecord
               "please make sure to load it from the database again."
       end
 
-      update_column(:deleted_at, nil)
+      run_callbacks :restore do
+        update_column(:deleted_at, nil)
 
-      restore_associated_records!
+        restore_associated_records!
+      end
     end
 
     # Whether the record has been destroyed.
