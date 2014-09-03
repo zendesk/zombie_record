@@ -70,6 +70,17 @@ describe ZombieRecord::Restorable do
       deleted_cover.deleted_at.should be_nil
     end
 
+    it "also restores restorable belongs_to associated records" do
+      author = Author.create!
+      book.update_attribute(:author, author)
+
+      book.destroy
+      deleted_book.restore!
+
+      deleted_author = Author.with_deleted.find(author.id)
+      deleted_author.deleted_at.should be_nil
+    end
+
     it "does not restore hard deleted associated records" do
       note = book.notes.create!
 
@@ -77,6 +88,18 @@ describe ZombieRecord::Restorable do
       deleted_book.restore!
 
       Note.where(id: note.id).should_not exist
+    end
+
+    it "does not restore an association if it is not destroy dependent" do
+      library = Library.create!
+      book.update_attribute(:library, library)
+
+      book.destroy
+      library.destroy
+      deleted_book.restore!
+
+      library_after_deletion = Library.with_deleted.find(library.id)
+      library_after_deletion.deleted_at.should_not be_nil
     end
 
     it "fails if the object itself has been destroyed" do
