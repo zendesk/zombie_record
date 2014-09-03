@@ -9,6 +9,7 @@ require 'zombie_record'
 class Book < ActiveRecord::Base
   include ZombieRecord::Restorable
 
+  belongs_to :library
   belongs_to :author, dependent: :destroy
   has_one :cover, dependent: :destroy
 
@@ -46,6 +47,12 @@ class Cover < ActiveRecord::Base
 end
 
 
+class Library < ActiveRecord::Base
+  include ZombieRecord::Restorable
+
+  has_many :book
+end
+
 RSpec.configure do |config|
   config.around do |example|
     ActiveRecord::Base.transaction do
@@ -71,6 +78,7 @@ RSpec.configure do |config|
 
       create_table :books do |t|
         t.integer :author_id
+        t.integer :library_id
         t.timestamps
         t.timestamp :deleted_at
       end
@@ -99,6 +107,11 @@ RSpec.configure do |config|
       end
 
       create_table :authors do |t|
+        t.timestamps
+        t.timestamp :deleted_at
+      end
+
+      create_table :libraries do |t|
         t.timestamps
         t.timestamp :deleted_at
       end

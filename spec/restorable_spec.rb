@@ -90,6 +90,18 @@ describe ZombieRecord::Restorable do
       Note.where(id: note.id).should_not exist
     end
 
+    it "does not restore an association if it is not destroy dependent" do
+      library = Library.create!
+      book.update_attribute(:library, library)
+
+      book.destroy
+      library.destroy
+      deleted_book.restore!
+
+      library_after_deletion = Library.with_deleted.find(library.id)
+      library_after_deletion.deleted_at.should_not be_nil
+    end
+
     it "fails if the object itself has been destroyed" do
       book.destroy
 
