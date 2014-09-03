@@ -70,6 +70,17 @@ describe ZombieRecord::Restorable do
       deleted_cover.deleted_at.should be_nil
     end
 
+    it "also restores restorable belongs_to associated records" do
+      author = Author.create!
+      book.update_attribute(:author, author)
+
+      book.destroy
+      deleted_book.restore!
+
+      deleted_author = Author.with_deleted.find(author.id)
+      deleted_author.deleted_at.should be_nil
+    end
+
     it "does not restore hard deleted associated records" do
       note = book.notes.create!
 

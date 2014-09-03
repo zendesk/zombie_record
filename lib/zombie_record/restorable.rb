@@ -76,6 +76,10 @@ module ZombieRecord
         association.klass.deleted.where(foreign_key => id)
       elsif association.macro == :has_many
         public_send(association.name).deleted
+      elsif association.macro == :belongs_to
+        associated_id = public_send(association.foreign_key)
+        return [] unless associated_id.present?
+        association.klass.deleted.where(:id => associated_id)
       else
         raise "association type #{association.macro} not supported"
       end

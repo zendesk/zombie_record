@@ -9,7 +9,7 @@ require 'zombie_record'
 class Book < ActiveRecord::Base
   include ZombieRecord::Restorable
 
-  belongs_to :author
+  belongs_to :author, dependent: :destroy
   has_one :cover, dependent: :destroy
 
   has_many :chapters, dependent: :destroy
