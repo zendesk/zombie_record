@@ -50,6 +50,13 @@ describe ZombieRecord::Restorable do
       deleted_book.deleted_at.should be_nil
     end
 
+    it "also updates the updated_at attribute" do
+      book.destroy
+      deleted_book.restore!
+
+      deleted_book.updated_at.should_not == book.updated_at
+    end
+
     it "also restores restorable has_many associated records" do
       chapter = book.chapters.create!
 

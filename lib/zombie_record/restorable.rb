@@ -16,11 +16,14 @@ module ZombieRecord
 
         if persisted?
           time = current_time_from_proper_timezone
-          update_column(:deleted_at, time)
+
+          columns_to_update = { deleted_at: time }
 
           if self.class.column_names.include?("updated_at")
-            update_column(:updated_at, time)
+            columns_to_update.merge!(updated_at: time)
           end
+
+          update_columns(columns_to_update)
         end
 
         @destroyed = true
@@ -38,7 +41,13 @@ module ZombieRecord
       end
 
       run_callbacks :restore do
-        update_column(:deleted_at, nil)
+        columns_to_update = { deleted_at: nil }
+
+        if self.class.column_names.include?("updated_at")
+          columns_to_update.merge!(updated_at: current_time_from_proper_timezone)
+        end
+
+        update_columns(columns_to_update)
 
         restore_associated_records!
       end
@@ -82,6 +91,16 @@ module ZombieRecord
         association.klass.deleted.where(:id => associated_id)
       else
         raise "association type #{association.macro} not supported"
+      end
+    end
+
+    # Imitation of Rails 4 method
+    # https://github.com/rails/rails/blob/master/activerecord/lib/active_record/persistence.rb#L272
+    def update_columns(attributes)
+      self.class.unscoped.where(self.class.primary_key => id).update_all(attributes)
+
+      attributes.each do |k, v|
+        raw_write_attribute(k, v)
       end
     end
 
