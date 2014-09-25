@@ -40,6 +40,12 @@ class Author < ActiveRecord::Base
   has_many :books
 end
 
+class Tag < ActiveRecord::Base
+  include ZombieRecord::Restorable
+
+  belongs_to :taggable, polymorphic: true, dependent: :destroy
+end
+
 class Cover < ActiveRecord::Base
   include ZombieRecord::Restorable
 
@@ -99,6 +105,13 @@ RSpec.configure do |config|
       create_table :notes do |t|
         t.integer :book_id
         t.timestamps
+      end
+
+      create_table :tags do |t|
+        t.string :name
+        t.string :taggable_type
+        t.integer :taggable_id
+        t.timestamp :deleted_at
       end
 
       create_table :covers do |t|

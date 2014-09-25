@@ -137,15 +137,27 @@ module ZombieRecord
       def reflect_on(name)
         reflection = @record.class.reflect_on_association(name)
 
-        if reflection && reflection.klass.ancestors.include?(Restorable)
+        if reflection && restorable_reflection?(reflection)
           reflection
         end
+      end
+
+      def associated_record_class(reflection)
+        if reflection.options[:polymorphic]
+          @record.public_send(reflection.foreign_type).constantize
+        else
+          reflection.klass
+        end
+      end
+
+      def restorable_reflection?(reflection)
+        associated_record_class(reflection).ancestors.include?(Restorable)
       end
 
       def with_deleted_associations(reflection, &block)
         case reflection.macro
         when :has_one, :belongs_to
-          reflection.klass.unscoped(&block).with_deleted_associations
+          associated_record_class(reflection).unscoped(&block).with_deleted_associations
         when :has_many
           block.call.with_deleted
         else

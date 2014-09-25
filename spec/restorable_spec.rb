@@ -22,6 +22,16 @@ describe ZombieRecord::Restorable do
       chapter.book.should == book
     end
 
+    it "allows accessing deleted polymorphic belongs_to associations" do
+      book = Book.create!
+      tag = Tag.create!(name: "jelly", taggable: book)
+
+      tag.destroy
+      tag = Tag.with_deleted.first
+
+      tag.taggable.should == book
+    end
+
     it "ensures deleted associations themselves allow access to deleted records" do
       book = Book.create!
       chapter = book.chapters.create!
