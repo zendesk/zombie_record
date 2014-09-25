@@ -103,6 +103,10 @@ module ZombieRecord
       end
     end
 
+    # Wraps a deleted record and makes sure that any associated record is
+    # available even if it is deleted. This is done by intercepting the method
+    # calls, checking if the method is an association access, and then ensuring
+    # that deleted records are included in the resulting query.
     class WithDeletedAssociations < BasicObject
       def initialize(record)
         @record = record
@@ -143,6 +147,8 @@ module ZombieRecord
       end
 
       def associated_record_class(reflection)
+        # Polymorphic associations don't have an easy way to access the class,
+        # so we'll have to do it ourselves.
         if reflection.options[:polymorphic]
           @record.public_send(reflection.foreign_type).constantize
         else
