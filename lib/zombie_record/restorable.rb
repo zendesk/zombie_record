@@ -6,6 +6,7 @@ module ZombieRecord
       default_scope { where(deleted_at: nil) }
 
       define_callbacks :restore
+      after_initialize :associate_with_deleted, unless: :associated?
     end
 
     # Override Rails' #destroy for soft-delete functionality
@@ -70,6 +71,45 @@ module ZombieRecord
     end
 
     private
+
+    def associate_with_deleted
+      self.class.reflect_on_all_associations.each do |association|
+
+        if association.options[:polymorphic]
+          klass = public_send("#{association.name}_type".to_sym).constantize
+          next unless klass.include?(Restorable)
+          associate_method(association, klass)
+          next
+        end
+
+        next unless association.klass.include?(Restorable)
+        associate_method(association)
+      end
+      Restorable.associated_classes << self.class
+    end
+
+    def associate_method(association, klass = nil)
+      self.class.send(:define_method, association.name) do
+        if deleted?
+          case association.macro
+          when :has_one, :belongs_to
+            (klass || association.klass).unscoped { super() }
+          when :has_many
+            super().with_deleted
+          end
+        else
+          super()
+        end
+      end
+    end
+
+    def associated?
+      Restorable.associated_classes.include?(self.class)
+    end
+
+    def self.associated_classes
+      @@associated_classes ||= []
+    end
 
     def restore_associated_records!
       self.class.reflect_on_all_associations.each do |association|
