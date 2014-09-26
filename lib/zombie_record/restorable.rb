@@ -51,6 +51,24 @@ module ZombieRecord
       !deleted_at.nil?
     end
 
+    # Allows accessing deleted associations from the record.
+    #
+    # Example
+    #
+    #   book = Book.first.with_deleted_associations
+    #
+    #   # Even deleted chapters are returned!
+    #   book.chapters #=> [...]
+    #
+    # Returns a wrapped ActiveRecord::Base object.
+    def with_deleted_associations
+      if deleted?
+        WithDeletedAssociations.new(self)
+      else
+        self
+      end
+    end
+
     private
 
     def restore_associated_records!
@@ -85,6 +103,76 @@ module ZombieRecord
       end
     end
 
+    # Wraps a deleted record and makes sure that any associated record is
+    # available even if it is deleted. This is done by intercepting the method
+    # calls, checking if the method is an association access, and then ensuring
+    # that deleted records are included in the resulting query.
+    class WithDeletedAssociations < BasicObject
+      def initialize(record)
+        @record = record
+      end
+
+      def method_missing(name, *args, &block)
+        delegate_to_record(name) { @record.public_send(name, *args, &block) }
+      end
+
+      # We want *all* methods to be delegated.
+      BasicObject.instance_methods.each do |name|
+        define_method(name) do |*args, &block|
+          @record.public_send(name, *args, &block)
+        end
+      end
+
+      private
+
+      def delegate_to_record(name, &block)
+        if reflection = reflect_on(name)
+          with_deleted_associations(reflection, &block)
+        else
+          block.call
+        end
+      end
+
+      def reflect_on(name)
+        reflection = @record.class.reflect_on_association(name)
+
+        if reflection && restorable_reflection?(reflection)
+          reflection
+        end
+      end
+
+      def associated_record_class(reflection)
+        # Polymorphic associations don't have an easy way to access the class,
+        # so we'll have to do it ourselves.
+        if reflection.options[:polymorphic]
+          @record.public_send(reflection.foreign_type).constantize
+        else
+          reflection.klass
+        end
+      end
+
+      def restorable_reflection?(reflection)
+        associated_record_class(reflection).ancestors.include?(Restorable)
+      end
+
+      def with_deleted_associations(reflection, &block)
+        case reflection.macro
+        when :has_one, :belongs_to
+          associated_record_class(reflection).unscoped(&block).with_deleted_associations
+        when :has_many
+          block.call.with_deleted
+        else
+          raise "invalid macro #{reflection.macro.inspect}"
+        end
+      end
+    end
+
+    module WithDeletedAssociationsWrapper
+      def to_a
+        super.map(&:with_deleted_associations)
+      end
+    end
+
     module ClassMethods
 
       # Scopes the relation to only include deleted records.
@@ -98,7 +186,9 @@ module ZombieRecord
       #
       # Returns an ActiveRecord::Relation.
       def with_deleted
-        scoped.tap {|relation| relation.default_scoped = false }
+        scoped.
+          tap {|relation| relation.default_scoped = false }.
+          extending(WithDeletedAssociationsWrapper)
       end
     end
   end
