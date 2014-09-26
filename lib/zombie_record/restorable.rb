@@ -116,16 +116,11 @@ module ZombieRecord
         delegate_to_record(name) { @record.public_send(name, *args, &block) }
       end
 
-      def ==(other)
-        @record == other
-      end
-
-      def equal?(other)
-        @record.equal?(other)
-      end
-
-      def class
-        @record.class
+      # We want *all* methods to be delegated.
+      BasicObject.instance_methods.each do |name|
+        define_method(name) do |*args, &block|
+          @record.public_send(name, *args, &block)
+        end
       end
 
       private
