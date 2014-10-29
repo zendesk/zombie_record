@@ -8,26 +8,6 @@ module ZombieRecord
       define_callbacks :restore
     end
 
-    # Override Rails' #destroy for soft-delete functionality
-    # When changing to Rails 4, override #destroy_row with a one-liner instead.
-    def destroy
-      run_callbacks :destroy do
-        destroy_associations
-
-        if persisted?
-          time = current_time_from_proper_timezone
-          update_column(:deleted_at, time)
-
-          if self.class.column_names.include?("updated_at")
-            update_column(:updated_at, time)
-          end
-        end
-
-        @destroyed = true
-        freeze
-      end
-    end
-
     # Restores a destroyed record.
     #
     # Returns nothing.
@@ -70,6 +50,16 @@ module ZombieRecord
     end
 
     private
+
+    # Override Rails' #destroy_row for soft-delete functionality
+    def destroy_row
+      time = current_time_from_proper_timezone
+      update_column(:deleted_at, time)
+
+      if self.class.column_names.include?("updated_at")
+        update_column(:updated_at, time)
+      end
+    end
 
     def restore_associated_records!
       self.class.reflect_on_all_associations.each do |association|
@@ -186,7 +176,7 @@ module ZombieRecord
       #
       # Returns an ActiveRecord::Relation.
       def with_deleted
-        scoped.
+        all.
           tap {|relation| relation.default_scoped = false }.
           extending(WithDeletedAssociationsWrapper)
       end
