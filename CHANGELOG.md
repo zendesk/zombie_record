@@ -1,5 +1,7 @@
 ###### Unreleased
 
+###### v1.0.0
+
 * Remove compatibility with Rails 3, instead adding compatibility with
   Rails 4.0.
 
