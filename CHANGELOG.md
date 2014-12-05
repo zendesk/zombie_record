@@ -1,5 +1,7 @@
 ###### Unreleased
 
+* Add compatibility with Rails 4.2.
+
 ###### v1.1.0
 
 * Add compatibility with Rails 4.1.
