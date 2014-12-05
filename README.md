@@ -2,6 +2,8 @@
 
 Allows restoring your Active Records from the dead!
 
+[![Build Status](https://travis-ci.org/zendesk/zombie_record.svg?branch=master)](https://travis-ci.org/zendesk/zombie_record)
+
 ## Installation
 
 Add this line to your application's Gemfile:
