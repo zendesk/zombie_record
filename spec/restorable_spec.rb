@@ -9,7 +9,7 @@ describe ZombieRecord::Restorable do
       book.destroy
       book = Book.with_deleted.first
 
-      book.cover.should == cover.reload
+      book.cover.should_not be_nil
     end
 
     it "allows accessing deleted belongs_to associations" do
