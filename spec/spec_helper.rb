@@ -85,14 +85,14 @@ RSpec.configure do |config|
       create_table :books do |t|
         t.integer :author_id
         t.integer :library_id
-        t.timestamps
+        t.timestamps null: false
         t.string :title
         t.timestamp :deleted_at
       end
 
       create_table :chapters do |t|
         t.integer :book_id
-        t.timestamps
+        t.timestamps null: false
         t.timestamp :deleted_at
       end
 
@@ -104,7 +104,7 @@ RSpec.configure do |config|
 
       create_table :notes do |t|
         t.integer :book_id
-        t.timestamps
+        t.timestamps null: false
       end
 
       create_table :tags do |t|
@@ -116,17 +116,17 @@ RSpec.configure do |config|
 
       create_table :covers do |t|
         t.integer :book_id
-        t.timestamps
+        t.timestamps null: false
         t.timestamp :deleted_at
       end
 
       create_table :authors do |t|
-        t.timestamps
+        t.timestamps null: false
         t.timestamp :deleted_at
       end
 
       create_table :libraries do |t|
-        t.timestamps
+        t.timestamps null: false
         t.timestamp :deleted_at
       end
     end
