@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["dasch@zendesk.com"]
   spec.description   = %q{Allows restoring your Active Records from the dead!}
   spec.summary       = %q{Allows restoring your Active Records from the dead!}
-  spec.homepage      = "https://github.com/dasch/zombie_record"
+  spec.homepage      = "https://github.com/zendesk/zombie_record"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
