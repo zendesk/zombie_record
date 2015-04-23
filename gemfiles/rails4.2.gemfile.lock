@@ -1,7 +1,7 @@
 PATH
   remote: ../
   specs:
-    zombie_record (1.1.1)
+    zombie_record (1.1.2)
       activerecord (~> 4.0)
       mysql2
 

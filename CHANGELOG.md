@@ -1,5 +1,9 @@
 ###### Unreleased
 
+###### v1.1.2
+
+* Fewer queries when soft deleting.
+
 ###### v1.1.1
 
 * Test against Rails 4.2.
