@@ -54,11 +54,13 @@ module ZombieRecord
     # Override Rails' #destroy_row for soft-delete functionality
     def destroy_row
       time = current_time_from_proper_timezone
-      update_column(:deleted_at, time)
 
+      update_params = { deleted_at: time }
       if self.class.column_names.include?("updated_at")
-        update_column(:updated_at, time)
+        update_params[:updated_at] = time
       end
+
+      update_columns(update_params)
     end
 
     def restore_associated_records!
