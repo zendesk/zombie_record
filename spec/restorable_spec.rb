@@ -91,6 +91,17 @@ describe ZombieRecord::Restorable do
       bookmark = Timecop.travel(2.days.ago) { Bookmark.create! }
       expect { bookmark.destroy }.to_not raise_exception
     end
+
+    it "updates the counter cache" do
+      book = Book.create!
+      bookmark = book.bookmarks.create!
+
+      expect(book.reload.bookmarks_count).to eq(1)
+
+      bookmark.destroy!
+
+      expect(book.reload.bookmarks_count).to eq(0)
+    end
   end
 
   describe "#restore!" do
