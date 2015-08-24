@@ -1,5 +1,9 @@
 ###### Unreleased
 
+###### v1.2.0
+
+* Fix counter_cache behavior in Rails 4.2.
+
 ###### v1.1.2
 
 * Fewer queries when soft deleting.
