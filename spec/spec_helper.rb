@@ -27,7 +27,7 @@ end
 class Bookmark < ActiveRecord::Base
   include ZombieRecord::Restorable
 
-  belongs_to :book
+  belongs_to :book, counter_cache: true
 end
 
 class Note < ActiveRecord::Base
@@ -85,6 +85,7 @@ RSpec.configure do |config|
       create_table :books do |t|
         t.integer :author_id
         t.integer :library_id
+        t.integer :bookmarks_count
         t.timestamps null: false
         t.string :title
         t.timestamp :deleted_at
