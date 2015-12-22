@@ -46,7 +46,7 @@ Book.find(42) # returns the Book record.
 
 ## Compatibility
 
-Zombie Record only works with Active Record 4. For Active Record 3 compatibility, check out the activerecord-3 branch of this gem.
+Zombie Record only works with Active Record >= 4. For Active Record 3 compatibility, check out the activerecord-3 branch of this gem.
 
 ## Contributing
 

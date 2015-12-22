@@ -1,5 +1,9 @@
 ###### Unreleased
 
+###### v1.3.0
+
+* Test against Rails 5.0.
+
 ###### v1.2.0
 
 * Fix counter_cache behavior in Rails 4.2.
