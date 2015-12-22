@@ -1,8 +1,8 @@
 language: ruby
 rvm:
-  - 2.0.0
+  - 2.1.8
+  - 2.2.4
 gemfile:
-  - gemfiles/rails4.0.gemfile
   - gemfiles/rails4.1.gemfile
   - gemfiles/rails4.2.gemfile
 bundler_args: ""
