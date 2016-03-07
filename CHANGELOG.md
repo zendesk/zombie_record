@@ -1,5 +1,9 @@
 ###### Unreleased
 
+###### v1.3.1
+
+* Fix a `to_a` vs `records` bug for Rails 5.0.
+
 ###### v1.3.0
 
 * Test against Rails 5.0.
