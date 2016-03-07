@@ -1,7 +1,4 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'zombie_record/version'
+require './lib/zombie_record/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "zombie_record"
@@ -24,6 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "bump"
   spec.add_development_dependency "rspec", "~> 2.14.1"
   spec.add_development_dependency "timecop", "~> 0.7.0"
   spec.add_development_dependency "wwtd", ">= 0.5.3"
