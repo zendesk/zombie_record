@@ -96,6 +96,10 @@ module ZombieRecord
         delegate_to_record(name) { @record.public_send(name, *args, &block) }
       end
 
+      def respond_to_missing?(method, include_all = false)
+        @record.respond_to?(method, include_all)
+      end
+
       # We want *all* methods to be delegated.
       BasicObject.instance_methods.each do |name|
         define_method(name) do |*args, &block|
