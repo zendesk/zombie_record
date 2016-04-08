@@ -1,5 +1,10 @@
 ###### Unreleased
 
+###### v1.3.2
+
+* Implement `respond_to_missing?` when implementing `method_missing` or it
+  won't work on Ruby 2.3.0.
+
 ###### v1.3.1
 
 * Fix a `to_a` vs `records` bug for Rails 5.0.
