@@ -68,12 +68,14 @@ RSpec.configure do |config|
   end
 
   config.before :suite do
+    mysql = URI(ENV['MYSQL_URL'] || 'mysql://root@127.0.0.1:3306')
+
     ActiveRecord::Base.establish_connection(
       adapter: "mysql2",
-      username: "root",
-      host: "127.0.0.1",
-      port: 3306,
-      password: ""
+      username: mysql.user,
+      host: mysql.host,
+      port: mysql.port,
+      password: mysql.password
     )
 
     ActiveRecord::Base.connection.create_database("zombie_record")
