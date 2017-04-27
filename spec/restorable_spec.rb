@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ZombieRecord::Restorable do
+RSpec.describe ZombieRecord::Restorable do
   context "when the record is deleted" do
     it "allows accessing a deleted has_one association" do
       book = Book.create!
