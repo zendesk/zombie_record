@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ZombieRecord::Restorable do
+RSpec.describe ZombieRecord::Restorable do
   context "when the record is deleted" do
     it "allows accessing a deleted has_one association" do
       book = Book.create!
@@ -9,7 +9,7 @@ describe ZombieRecord::Restorable do
       book.destroy
       book = Book.with_deleted.first
 
-      book.cover.should_not be_nil
+      expect(book.cover).not_to be_nil
     end
 
     it "allows accessing deleted belongs_to associations" do
@@ -19,7 +19,7 @@ describe ZombieRecord::Restorable do
       book.destroy
       chapter = Chapter.with_deleted.first
 
-      chapter.book.should == book
+      expect(chapter.book).to eq(book)
     end
 
     it "allows accessing deleted polymorphic belongs_to associations" do
@@ -29,7 +29,7 @@ describe ZombieRecord::Restorable do
       tag.destroy
       tag = Tag.with_deleted.first
 
-      tag.taggable.should == book
+      expect(tag.taggable).to eq(book)
     end
 
     it "ensures deleted associations themselves allow access to deleted records" do
@@ -40,10 +40,10 @@ describe ZombieRecord::Restorable do
       book.destroy
       bookmark = Bookmark.with_deleted.first
 
-      bookmark.book.chapters.should == [chapter]
+      expect(bookmark.book.chapters).to eq([chapter])
       chapter = bookmark.book.chapters.first
 
-      chapter.book.should == book
+      expect(chapter.book).to eq(book)
     end
 
     it "forwards normal method calls" do
@@ -51,7 +51,7 @@ describe ZombieRecord::Restorable do
       book.destroy
       book = Book.with_deleted.first
 
-      book.title.should == "The Odyssey"
+      expect(book.title).to eq("The Odyssey")
     end
   end
 
@@ -62,7 +62,7 @@ describe ZombieRecord::Restorable do
 
       book1.destroy
 
-      Book.deleted.should == [book1]
+      expect(Book.deleted).to eq([book1])
     end
 
     it "respects associations" do
@@ -73,7 +73,7 @@ describe ZombieRecord::Restorable do
       book.destroy
       other_book.destroy
 
-      author.books.deleted.should == [book]
+      expect(author.books.deleted).to eq([book])
     end
   end
 
@@ -84,7 +84,7 @@ describe ZombieRecord::Restorable do
 
       book.destroy
 
-      book.updated_at.should_not == updated_at
+      expect(book.updated_at).not_to eq(updated_at)
     end
 
     it "does not set #updated_at if it is not defined" do
@@ -112,7 +112,7 @@ describe ZombieRecord::Restorable do
       book.destroy
 
       deleted_book.restore!
-      deleted_book.deleted_at.should be_nil
+      expect(deleted_book.deleted_at).to be_nil
     end
 
     it "also restores restorable has_many associated records" do
@@ -122,7 +122,7 @@ describe ZombieRecord::Restorable do
       deleted_book.restore!
 
       deleted_chapter = Chapter.with_deleted.find(chapter.id)
-      deleted_chapter.deleted_at.should be_nil
+      expect(deleted_chapter.deleted_at).to be_nil
     end
 
     it "also restores restorable has_one associated records" do
@@ -132,7 +132,7 @@ describe ZombieRecord::Restorable do
       deleted_book.restore!
 
       deleted_cover = Cover.with_deleted.find(cover.id)
-      deleted_cover.deleted_at.should be_nil
+      expect(deleted_cover.deleted_at).to be_nil
     end
 
     it "also restores restorable belongs_to associated records" do
@@ -143,7 +143,7 @@ describe ZombieRecord::Restorable do
       deleted_book.restore!
 
       deleted_author = Author.with_deleted.find(author.id)
-      deleted_author.deleted_at.should be_nil
+      expect(deleted_author.deleted_at).to be_nil
     end
 
     it "does not restore hard deleted associated records" do
@@ -152,7 +152,7 @@ describe ZombieRecord::Restorable do
       book.destroy
       deleted_book.restore!
 
-      Note.where(id: note.id).should_not exist
+      expect(Note.where(id: note.id)).not_to exist
     end
 
     it "does not restore an association if it is not destroy dependent" do
@@ -164,7 +164,7 @@ describe ZombieRecord::Restorable do
       deleted_book.restore!
 
       library_after_deletion = Library.with_deleted.find(library.id)
-      library_after_deletion.deleted_at.should_not be_nil
+      expect(library_after_deletion.deleted_at).not_to be_nil
     end
 
     it "fails if the object itself has been destroyed" do
@@ -180,11 +180,11 @@ describe ZombieRecord::Restorable do
     it "returns true if the record is deleted" do
       book.destroy
 
-      book.should be_deleted
+      expect(book).to be_deleted
     end
 
     it "returns false if the record is not deleted" do
-      book.should_not be_deleted
+      expect(book).not_to be_deleted
     end
   end
 end

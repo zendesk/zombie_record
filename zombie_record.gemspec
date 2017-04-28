@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "byebug"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "bump"
-  spec.add_development_dependency "rspec", "~> 2.14.1"
-  spec.add_development_dependency "timecop", "~> 0.7.0"
-  spec.add_development_dependency "wwtd", ">= 0.5.3"
+  spec.add_development_dependency "rspec", "~> 3.5.0"
+  spec.add_development_dependency "timecop"
+  spec.add_development_dependency "wwtd"
 end
