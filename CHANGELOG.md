@@ -1,5 +1,7 @@
 ###### Unreleased
 
+* Test against Rails 5.2.
+
 ###### v1.3.2
 
 * Implement `respond_to_missing?` when implementing `method_missing` or it
