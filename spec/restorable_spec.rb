@@ -53,6 +53,14 @@ RSpec.describe ZombieRecord::Restorable do
 
       expect(book.title).to eq("The Odyssey")
     end
+
+    it "forwards private method calls" do
+      book = Book.create!(title: "The Odyssey")
+      book.destroy
+      book = Book.with_deleted.first
+
+      expect(book.to_ary).to be_nil
+    end
   end
 
   describe ".deleted" do
