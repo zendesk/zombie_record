@@ -1,6 +1,15 @@
 ###### Unreleased
 
+###### v1.4.1
+
 * Test against Rails 5.2.
+* Test against Ruby 2.5.
+* Don't implement `respond_to_missing?` when implementing `method_missing` or it
+  won't work on Ruby 2.5.0. Truly confusing.
+
+###### v1.4.0
+
+* Test against Rails 5.1.
 
 ###### v1.3.2
 
