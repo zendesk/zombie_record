@@ -53,6 +53,15 @@ RSpec.describe ZombieRecord::Restorable do
 
       expect(book.title).to eq("The Odyssey")
     end
+
+    it "forwards to_ary" do
+      book = Book.create!(title: "The Odyssey")
+      book.destroy
+      book = Book.with_deleted.first
+
+      # #flatten will implicitly call #to_ary
+      expect([[[book]]].flatten).to eq([book])
+    end
   end
 
   describe ".deleted" do
