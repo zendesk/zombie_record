@@ -93,7 +93,7 @@ module ZombieRecord
       end
 
       def method_missing(name, *args, &block)
-        delegate_to_record(name) { @record.public_send(name, *args, &block) }
+        delegate_to_record(name) { @record.send(name, *args, &block) }
       end
 
       def respond_to_missing?(method, include_all = false)
