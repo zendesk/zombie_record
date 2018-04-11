@@ -1,5 +1,9 @@
 ###### Unreleased
 
+###### v1.4.2
+
+* Test against Rails 5.2 final.
+
 ###### v1.4.1
 
 * Test against Rails 5.2.
