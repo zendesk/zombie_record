@@ -18,3 +18,5 @@ matrix:
       gemfile: gemfiles/rails4.1.gemfile
     - rvm: 2.5
       gemfile: gemfiles/rails4.1.gemfile
+services:
+   - mysql
