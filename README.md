@@ -2,7 +2,7 @@
 
 Allows restoring your Active Records from the dead!
 
-[![Build Status](https://travis-ci.org/zendesk/zombie_record.svg?branch=master)](https://travis-ci.org/zendesk/zombie_record)
+[![Build Status](https://github.com/zendesk/zombie_record/workflows/ci/badge.svg)](https://github.com/zendesk/zombie_record/actions?query=workflow%3ACI)
 
 ## Installation
 
