@@ -172,15 +172,9 @@ module ZombieRecord
       #
       # Returns an ActiveRecord::Relation.
       def with_deleted
-        if ActiveRecord::VERSION::MAJOR == 4 && ActiveRecord::VERSION::MINOR == 0
-          all.
-            tap {|relation| relation.default_scoped = false }.
-            extending(WithDeletedAssociationsWrapper)
-        else
-          all.
-            unscope(where: :deleted_at).
-            extending(WithDeletedAssociationsWrapper)
-        end
+        all.
+          unscope(where: :deleted_at).
+          extending(WithDeletedAssociationsWrapper)
       end
     end
   end
