@@ -1,5 +1,7 @@
 ###### Unreleased
 
+* Drop support for Ruby 2.2 and 2.3.
+
 ###### v1.4.2
 
 * Test against Rails 5.2 final.
