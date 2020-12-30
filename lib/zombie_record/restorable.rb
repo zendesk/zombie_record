@@ -96,12 +96,6 @@ module ZombieRecord
         delegate_to_record(name) { @record.public_send(name, *args, &block) }
       end
 
-      if ::RUBY_VERSION.start_with?('2.3.')
-        def respond_to_missing?(method, include_all = false)
-          @record.respond_to?(method, include_all)
-        end
-      end
-
       # We want *all* methods to be delegated.
       BasicObject.instance_methods.each do |name|
         define_method(name) do |*args, &block|
@@ -178,15 +172,9 @@ module ZombieRecord
       #
       # Returns an ActiveRecord::Relation.
       def with_deleted
-        if ActiveRecord::VERSION::MAJOR == 4 && ActiveRecord::VERSION::MINOR == 0
-          all.
-            tap {|relation| relation.default_scoped = false }.
-            extending(WithDeletedAssociationsWrapper)
-        else
-          all.
-            unscope(where: :deleted_at).
-            extending(WithDeletedAssociationsWrapper)
-        end
+        all.
+          unscope(where: :deleted_at).
+          extending(WithDeletedAssociationsWrapper)
       end
     end
   end

@@ -15,7 +15,9 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "activerecord", ">= 4.1", "< 6.1"
+  spec.required_ruby_version = ">= 2.4"
+
+  spec.add_dependency "activerecord", ">= 4.2", "< 6.1"
   spec.add_dependency "mysql2"
 
   spec.add_development_dependency "bundler"
