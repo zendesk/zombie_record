@@ -80,7 +80,7 @@ RSpec.configure do |config|
       password: mysql.password
     )
 
-    ActiveRecord::Base.connection.create_database("zombie_record")
+    ActiveRecord::Base.connection.create_database("zombie_record", charset: "utf8mb4")
     ActiveRecord::Base.connection.execute("use zombie_record;")
 
     ActiveRecord::Schema.define do

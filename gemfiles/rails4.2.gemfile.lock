@@ -2,7 +2,7 @@ PATH
   remote: ..
   specs:
     zombie_record (1.4.2)
-      activerecord (>= 4.2, < 6.1)
+      activerecord (>= 4.2, < 6.2)
       mysql2
 
 GEM
