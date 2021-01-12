@@ -1,5 +1,7 @@
 ###### Unreleased
 
+###### v1.4.3
+
 * Drop support for Ruby 2.2 and 2.3.
 * Drop support for Rails 4.1.
 * Test against Rails 6.0 and 6.1.
