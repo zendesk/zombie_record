@@ -70,18 +70,10 @@ RSpec.configure do |config|
   end
 
   config.before :suite do
-    mysql = URI(ENV['MYSQL_URL'] || 'mysql://root@127.0.0.1:3306')
-
     ActiveRecord::Base.establish_connection(
-      adapter: "mysql2",
-      username: mysql.user,
-      host: mysql.host,
-      port: mysql.port,
-      password: mysql.password
+      adapter: "sqlite3",
+      database: ":memory:"
     )
-
-    ActiveRecord::Base.connection.create_database("zombie_record", charset: "utf8mb4")
-    ActiveRecord::Base.connection.execute("use zombie_record;")
 
     ActiveRecord::Schema.define do
       self.verbose = false
