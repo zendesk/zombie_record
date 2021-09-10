@@ -9,7 +9,6 @@ jobs:
     strategy:
       matrix:
         ruby-version:
-          - 2.4
           - 2.5
           - 2.6
         gemfile:
@@ -19,11 +18,6 @@ jobs:
           - rails5.2
           - rails6.0
           - rails6.1
-        exclude:
-          - ruby-version: 2.4
-            gemfile: rails6.0
-          - ruby-version: 2.4
-            gemfile: rails6.1
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
     steps:
