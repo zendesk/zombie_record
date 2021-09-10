@@ -25,5 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bump"
   spec.add_development_dependency "rspec", "~> 3.5"
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "standard", "~> 1.3.0"
   spec.add_development_dependency "timecop"
 end
