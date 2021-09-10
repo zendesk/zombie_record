@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe ZombieRecord::Restorable do
   context "when the record is deleted" do

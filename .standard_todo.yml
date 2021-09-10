@@ -2,22 +2,7 @@
 # Remove from this list as you refactor files.
 ---
 ignore:
-- Gemfile:
-  - Style/StringLiterals
-- gemfiles/rails4.2.gemfile:
-  - Style/StringLiterals
-- gemfiles/rails5.0.gemfile:
-  - Style/StringLiterals
-- gemfiles/rails5.1.gemfile:
-  - Style/StringLiterals
-- gemfiles/rails5.2.gemfile:
-  - Style/StringLiterals
-- gemfiles/rails6.0.gemfile:
-  - Style/StringLiterals
-- gemfiles/rails6.1.gemfile:
-  - Style/StringLiterals
 - lib/zombie_record.rb:
-  - Style/StringLiterals
   - Layout/SpaceInsideHashLiteralBraces
 - lib/zombie_record/restorable.rb:
   - Style/LineEndConcatenation
@@ -28,15 +13,12 @@ ignore:
   - Layout/EmptyLinesAroundModuleBody
   - Layout/DotPosition
 - spec/restorable_spec.rb:
-  - Style/StringLiterals
   - Lint/UselessAssignment
 - spec/spec_helper.rb:
-  - Style/StringLiterals
   - Layout/EmptyLines
   - Layout/EmptyLineBetweenDefs
   - Style/RescueModifier
 - zombie_record.gemspec:
-  - Style/StringLiterals
   - Layout/ExtraSpacing
   - Style/PercentLiteralDelimiters
   - Style/RedundantPercentQ

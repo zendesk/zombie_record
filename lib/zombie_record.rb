@@ -1,10 +1,10 @@
-require 'active_support'
-require 'zombie_record/version'
+require "active_support"
+require "zombie_record/version"
 
 module ZombieRecord
 end
 
-require 'zombie_record/restorable'
+require "zombie_record/restorable"
 
 module ActiveRecord
   module Persistence

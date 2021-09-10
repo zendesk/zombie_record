@@ -1,4 +1,4 @@
-require './lib/zombie_record/version'
+require "./lib/zombie_record/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "zombie_record"
