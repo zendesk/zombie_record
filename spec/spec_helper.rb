@@ -52,7 +52,6 @@ class Cover < ActiveRecord::Base
   belongs_to :book
 end
 
-
 class Library < ActiveRecord::Base
   include ZombieRecord::Restorable
 
@@ -130,6 +129,8 @@ RSpec.configure do |config|
   end
 
   config.after :suite do
-    ActiveRecord::Base.connection.drop_database("zombie_record") rescue nil
+    ActiveRecord::Base.connection.drop_database("zombie_record")
+  rescue
+    nil
   end
 end

@@ -13,8 +13,8 @@ module ZombieRecord
     # Returns nothing.
     def restore!
       if frozen?
-        raise "cannot restore an object that has been destroyed directly; " <<
-              "please make sure to load it from the database again."
+        raise "cannot restore an object that has been destroyed directly; " \
+          "please make sure to load it from the database again."
       end
 
       run_callbacks :restore do
@@ -77,7 +77,7 @@ module ZombieRecord
       elsif association.macro == :belongs_to
         associated_id = public_send(association.foreign_key)
         return [] unless associated_id.present?
-        association.klass.deleted.where(:id => associated_id)
+        association.klass.deleted.where(id: associated_id)
       else
         raise "association type #{association.macro} not supported"
       end
@@ -106,7 +106,7 @@ module ZombieRecord
       private
 
       def delegate_to_record(name, &block)
-        if reflection = reflect_on(name)
+        if (reflection = reflect_on(name))
           with_deleted_associations(reflection, &block)
         else
           block.call
@@ -160,7 +160,6 @@ module ZombieRecord
     end
 
     module ClassMethods
-
       # Scopes the relation to only include deleted records.
       #
       # Returns an ActiveRecord::Relation.
@@ -172,9 +171,9 @@ module ZombieRecord
       #
       # Returns an ActiveRecord::Relation.
       def with_deleted
-        all.
-          unscope(where: :deleted_at).
-          extending(WithDeletedAssociationsWrapper)
+        all
+          .unscope(where: :deleted_at)
+          .extending(WithDeletedAssociationsWrapper)
       end
     end
   end

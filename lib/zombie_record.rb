@@ -15,7 +15,7 @@ module ActiveRecord
       if self.class.include?(ZombieRecord::Restorable)
         time = current_time_from_proper_timezone
 
-        update_params = { deleted_at: time }
+        update_params = {deleted_at: time}
         if self.class.column_names.include?("updated_at")
           update_params[:updated_at] = time
         end

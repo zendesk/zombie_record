@@ -4,7 +4,7 @@ RSpec.describe ZombieRecord::Restorable do
   context "when the record is deleted" do
     it "allows accessing a deleted has_one association" do
       book = Book.create!
-      cover = Cover.create!(book: book)
+      Cover.create!(book: book)
 
       book.destroy
       book = Book.with_deleted.first
@@ -14,7 +14,7 @@ RSpec.describe ZombieRecord::Restorable do
 
     it "allows accessing deleted belongs_to associations" do
       book = Book.create!
-      chapter = book.chapters.create!
+      book.chapters.create!
 
       book.destroy
       chapter = Chapter.with_deleted.first
@@ -67,7 +67,7 @@ RSpec.describe ZombieRecord::Restorable do
   describe ".deleted" do
     it "scopes the query to only deleted records" do
       book1 = Book.create!
-      book2 = Book.create!
+      _book2 = Book.create!
 
       book1.destroy
 
