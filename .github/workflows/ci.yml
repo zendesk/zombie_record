@@ -13,7 +13,6 @@ jobs:
           - 2.5
           - 2.6
         gemfile:
-          - rails4.2
           - rails5.0
           - rails5.1
           - rails5.2
