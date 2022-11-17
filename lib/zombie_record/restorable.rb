@@ -148,14 +148,8 @@ module ZombieRecord
     end
 
     module WithDeletedAssociationsWrapper
-      if ActiveRecord::VERSION::MAJOR < 5
-        def to_a
-          super.map(&:with_deleted_associations)
-        end
-      else
-        def records
-          super.map(&:with_deleted_associations)
-        end
+      def records
+        super.map(&:with_deleted_associations)
       end
     end
 

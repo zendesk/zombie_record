@@ -1,5 +1,7 @@
 ###### Unreleased
 
+* Drop support for Rails 4.2.
+
 ###### v1.4.3
 
 * Drop support for Ruby 2.2 and 2.3.
