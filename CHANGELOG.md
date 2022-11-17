@@ -1,5 +1,6 @@
 ###### Unreleased
 
+* Add support for Rails 7.0
 * Drop support for Rails 4.2.
 
 ###### v1.4.3
