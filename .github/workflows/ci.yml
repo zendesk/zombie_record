@@ -9,8 +9,6 @@ jobs:
     strategy:
       matrix:
         ruby-version:
-          - 2.4
-          - 2.5
           - 2.6
         gemfile:
           - rails5.0
@@ -18,11 +16,6 @@ jobs:
           - rails5.2
           - rails6.0
           - rails6.1
-        exclude:
-          - ruby-version: 2.4
-            gemfile: rails6.0
-          - ruby-version: 2.4
-            gemfile: rails6.1
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
     steps:
@@ -34,3 +27,18 @@ jobs:
           bundler-cache: true
       - name: RSpec
         run: bundle exec rspec
+
+  specs_successful:
+    name: Specs passing?
+    needs: specs
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          if ${{ needs.specs.result == 'success' }}
+          then
+            echo "All specs pass"
+          else
+            echo "Some specs failed"
+            false
+          fi
