@@ -92,8 +92,8 @@ module ZombieRecord
         @record = record
       end
 
-      def method_missing(name, *args, &block)
-        delegate_to_record(name) { @record.public_send(name, *args, &block) }
+      def method_missing(name, *args, **kw_args, &block)
+        delegate_to_record(name) { @record.public_send(name, *args, **kw_args, &block) }
       end
 
       # We want *all* methods to be delegated.
