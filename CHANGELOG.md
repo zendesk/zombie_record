@@ -1,5 +1,9 @@
 ###### Unreleased
 
+###### v1.5.1
+
+* Fix keyword arguments error for `method_missing`.
+
 ###### v1.5.0
 
 * Add support for Rails 7.0
