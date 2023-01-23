@@ -62,6 +62,15 @@ RSpec.describe ZombieRecord::Restorable do
       # #flatten will implicitly call #to_ary
       expect([[[book]]].flatten).to eq([book])
     end
+
+    it "doesn't re-save duplicated record" do
+      book = Book.create!(title: "The Odyssey")
+      book.destroy
+      book_dup = Book.with_deleted.first.save(validate: true)
+
+      expect(Book.count).to eq(0)
+      expect(Book.with_deleted.size).to eq(1)
+    end
   end
 
   describe ".deleted" do
