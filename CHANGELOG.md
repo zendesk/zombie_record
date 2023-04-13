@@ -1,5 +1,11 @@
 ###### Unreleased
 
+###### v1.6.0
+
+* Drop support for Ruby 2.6
+* Drop support for Rails 5.0 & 5.1
+* Test against Ruby 3.2
+
 ###### v1.5.1
 
 * Fix keyword arguments error for `method_missing`.
