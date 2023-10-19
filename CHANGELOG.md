@@ -1,5 +1,10 @@
 ###### Unreleased
 
+###### v1.7.0
+
+* Add support for Rails 7.1
+* Drop support for Rails 5.2 and 6.0
+
 ###### v1.6.0
 
 * Drop support for Ruby 2.6
