@@ -2,7 +2,7 @@ PATH
   remote: ..
   specs:
     zombie_record (1.7.0)
-      activerecord (>= 6.1, < 7.2)
+      activerecord (>= 6.1)
 
 GEM
   remote: https://rubygems.org/
