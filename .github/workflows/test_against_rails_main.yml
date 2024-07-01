@@ -1,6 +1,9 @@
-name: CI
+name: Test against Rails main
 
-on: push
+on:
+  schedule:
+    - cron: "0 0 * * *" # Run every day at 00:00 UTC
+  workflow_dispatch:
 
 jobs:
   specs:
@@ -9,13 +12,8 @@ jobs:
     strategy:
       matrix:
         ruby-version:
-          - '3.1'
-          - '3.2'
           - '3.3'
         gemfile:
-          - rails6.1
-          - rails7.0
-          - rails7.1
           - rails_main
     env:
       BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
@@ -28,18 +26,3 @@ jobs:
           bundler-cache: true
       - name: RSpec
         run: bundle exec rspec
-
-  specs_successful:
-    name: Specs passing?
-    needs: specs
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          if ${{ needs.specs.result == 'success' }}
-          then
-            echo "All specs pass"
-          else
-            echo "Some specs failed"
-            false
-          fi

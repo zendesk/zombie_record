@@ -2,7 +2,7 @@ PATH
   remote: ..
   specs:
     zombie_record (1.7.0)
-      activerecord (>= 6.1, < 7.2)
+      activerecord (>= 6.1)
 
 GEM
   remote: https://rubygems.org/
@@ -30,8 +30,7 @@ GEM
     concurrent-ruby (1.2.2)
     connection_pool (2.4.1)
     diff-lcs (1.5.0)
-    drb (2.1.1)
-      ruby2_keywords
+    drb (2.2.1)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     mini_portile2 (2.8.4)
@@ -51,7 +50,6 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-support (3.12.1)
-    ruby2_keywords (0.0.5)
     sqlite3 (1.6.7)
       mini_portile2 (~> 2.8.0)
     timecop (0.9.8)
@@ -69,7 +67,7 @@ DEPENDENCIES
   byebug
   rake
   rspec (~> 3.5)
-  sqlite3
+  sqlite3 (~> 1.4)
   timecop
   zombie_record!
 
