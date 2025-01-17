@@ -4,3 +4,7 @@ gemspec path: "../"
 
 gem "activerecord", "~> 7.0.0"
 gem "sqlite3", "~> 1.4"
+gem "base64"
+gem "bigdecimal"
+gem "drb"
+gem "mutex_m"
