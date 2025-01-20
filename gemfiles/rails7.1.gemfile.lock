@@ -34,7 +34,7 @@ GEM
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     mini_portile2 (2.8.4)
-    minitest (5.20.0)
+    minitest (5.25.4)
     mutex_m (0.1.2)
     rake (13.0.6)
     rspec (3.12.0)
@@ -72,4 +72,4 @@ DEPENDENCIES
   zombie_record!
 
 BUNDLED WITH
-   2.4.20
+   2.6.2
