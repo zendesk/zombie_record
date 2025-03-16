@@ -59,7 +59,6 @@ DEPENDENCIES
   base64
   bigdecimal
   bump
-  bundler
   byebug
   drb
   mutex_m

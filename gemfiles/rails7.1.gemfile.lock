@@ -63,7 +63,6 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 7.1.0)
   bump
-  bundler
   byebug
   rake
   rspec (~> 3.5)
