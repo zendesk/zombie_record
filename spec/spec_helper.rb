@@ -1,4 +1,5 @@
 require 'bundler/setup'
+require 'logger'
 require 'active_record'
 require 'timecop'
 require 'byebug'
