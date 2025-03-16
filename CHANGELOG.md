@@ -1,5 +1,7 @@
 ###### Unreleased
 
+* Don't delegate `:__id__` and `:__send__` to the deleted record object.
+
 ###### v1.8.0
 
 * Drop upper limit on Rails, test with Rails main.
