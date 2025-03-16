@@ -29,7 +29,6 @@ GEM
     base64 (0.2.0)
     benchmark (0.4.0)
     bigdecimal (3.1.9)
-    bump (0.10.0)
     byebug (11.1.3)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.0)
@@ -72,7 +71,6 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (~> 7.1.0)
-  bump
   byebug
   rake
   rspec (~> 3.5)
