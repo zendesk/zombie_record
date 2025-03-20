@@ -1,4 +1,3 @@
-source 'https://rubygems.org'
+eval_gemfile "gemfiles/common.rb"
 
-# Specify your gem's dependencies in zombie_record.gemspec
-gemspec
+gem "sqlite3"
