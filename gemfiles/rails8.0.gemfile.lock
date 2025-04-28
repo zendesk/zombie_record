@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    zombie_record (1.8.0)
+    zombie_record (1.9.0)
       activerecord (>= 6.1)
 
 GEM

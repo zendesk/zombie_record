@@ -13,7 +13,7 @@ module ZombieRecord
     # Returns nothing.
     def restore!
       if frozen?
-        raise "cannot restore an object that has been destroyed directly; " <<
+        raise "cannot restore an object that has been destroyed directly; " \
               "please make sure to load it from the database again."
       end
 
@@ -96,8 +96,9 @@ module ZombieRecord
         delegate_to_record(name) { @record.public_send(name, ...) }
       end
 
-      # We want *all* methods to be delegated.
-      BasicObject.instance_methods.each do |name|
+      # We want *almost all* methods to be delegated.
+      delegated_methods = BasicObject.instance_methods - [:__send__, :__id__]
+      delegated_methods.each do |name|
         define_method(name) do |*args, &block|
           @record.public_send(name, *args, &block)
         end

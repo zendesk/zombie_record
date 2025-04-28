@@ -4,6 +4,8 @@ require 'active_record'
 require 'timecop'
 require 'byebug'
 
+Warning[:deprecated] = true
+
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'zombie_record'
 
