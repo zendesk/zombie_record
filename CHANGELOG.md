@@ -1,5 +1,7 @@
 ###### Unreleased
 
+###### v1.9.0
+
 * Don't delegate `:__id__` and `:__send__` to the deleted record object.
 
 ###### v1.8.0
