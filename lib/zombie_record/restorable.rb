@@ -3,7 +3,7 @@ module ZombieRecord
     extend ActiveSupport::Concern
 
     included do
-      default_scope { where(deleted_at: nil) }
+      default_scope { ZombieRecord.enabled? ? where(deleted_at: nil) : all }
 
       define_callbacks :restore
     end

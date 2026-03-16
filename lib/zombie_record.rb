@@ -2,6 +2,15 @@ require 'active_support'
 require 'zombie_record/version'
 
 module ZombieRecord
+  @@enabled = true
+
+  def self.enabled?
+    @@enabled
+  end
+
+  def self.enabled=(enabled)
+    @@enabled = enabled
+  end
 end
 
 require 'zombie_record/restorable'
@@ -12,7 +21,7 @@ module ActiveRecord
 
     # Maybe override Rails' #destroy_row for soft-delete functionality
     def destroy_row
-      if self.class.include?(ZombieRecord::Restorable)
+      if self.class.include?(ZombieRecord::Restorable) && ZombieRecord.enabled?
         time = current_time_from_proper_timezone
 
         update_params = { deleted_at: time }
