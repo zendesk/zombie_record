@@ -1,5 +1,7 @@
 ###### Unreleased
 
+* Update supported Ruby versions to 3.3, 3.4, 4.0 and Rails versions to 7.2, 8.0, 8.1.
+
 ###### v1.9.0
 
 * Don't delegate `:__id__` and `:__send__` to the deleted record object.
